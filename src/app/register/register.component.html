@@ -1,0 +1,35 @@
+<div class="register-container">
+    <h2>Kayıt Ol</h2>
+    <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">Email</nz-form-label>
+        <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+          <input nz-input formControlName="email" placeholder="Email" />
+        </nz-form-control>
+      </nz-form-item>
+    
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">Şifre</nz-form-label>
+        <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+          <input nz-input type="password" formControlName="password" placeholder="Şifre" />
+        </nz-form-control>
+      </nz-form-item>
+    
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">Şifre Tekrar</nz-form-label>
+        <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+          <input nz-input type="password" formControlName="confirmPassword" placeholder="Şifreyi Tekrarla" />
+          <div *ngIf="registerForm.get('confirmPassword')?.hasError('mismatch')" class="error-message">
+            Şifreler eşleşmiyor!
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+    
+      <nz-form-item>
+        <nz-form-control [nzSpan]="17" [nzOffset]="5">
+          <button nz-button nzType="primary" [disabled]="!registerForm.valid">Kayıt Ol</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  
