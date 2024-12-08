@@ -24,8 +24,8 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
   loginForm: FormGroup; 
-  errorMessage: string = '';  // Hata mesajını tutacağız
-  
+  errorMessage: string = '';  
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -37,12 +37,14 @@ export class LoginComponent {
       password: ['', [Validators.required, Validators.minLength(6)]] // Şifre zorunlu ve en az 6 karakter olmalı
     });
   }
+
   ngOnInit(): void {
     // Eğer kullanıcı zaten giriş yaptıysa login sayfasına gitmesine izin vermeyelim
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/offer']);
     }
   }
+
   // Form submit edildiğinde
   onSubmit(): void {
     if (this.loginForm.valid) {
@@ -53,7 +55,7 @@ export class LoginComponent {
       const loginSuccess = this.authService.login(email, password);
 
       if (loginSuccess) {
-        // Giriş başarılıysa /offer sayfasına yönlendiriyoruz
+        // Giriş başarılıysa modal'ı göster ve /offer sayfasına yönlendiriyoruz
         this.router.navigate(['/offer']);
       } else {
         // Giriş başarısızsa hata mesajı göster

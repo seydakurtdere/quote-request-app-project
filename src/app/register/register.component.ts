@@ -7,6 +7,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';  
 import { ReactiveFormsModule } from '@angular/forms';  
 import { CommonModule } from '@angular/common';
+import { NzModalService } from 'ng-zorro-antd/modal'; 
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +20,8 @@ import { CommonModule } from '@angular/common';
     NzFormModule,      
     NzInputModule,     
     NzButtonModule,    
-    ReactiveFormsModule  
+    ReactiveFormsModule,
+    NzModalModule 
   ],
 })
 export class RegisterComponent {
@@ -28,7 +31,8 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modal: NzModalService
   ) {
     this.registerForm = this.fb.group(
       {
@@ -59,13 +63,24 @@ export class RegisterComponent {
 
       if (registrationSuccess) {
         // Kayıt başarılıysa offer sayfasına yönlendiriyoruz
-        this.router.navigate(['/offer']);
+        this.showSuccessModal(); // Modal'ı burada gösteriyoruz
+        //this.router.navigate(['/offer']);
       } else {
         // Kayıt başarısızsa hata mesajı veriyoruz
-        this.errorMessage = 'Bu email adresiyle bir kullanıcı zaten mevcut!';
+        this.errorMessage = 'A user already exists with this email address!';
       }
     } else {
-      this.errorMessage = 'Lütfen formu doğru şekilde doldurun!';
+      this.errorMessage = 'Please fill out the form correctly!';
     }
   }
+
+  // Başarılı işlem sonrası gösterilecek modal
+  showSuccessModal(): void {
+    this.modal.success({
+      nzTitle: 'Success',
+      nzContent: 'Your user has been successfully created!',
+      nzOnOk: () => this.router.navigate(['/offer']),
+    });
+  }
+
 }

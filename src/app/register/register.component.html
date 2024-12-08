@@ -1,33 +1,33 @@
 <div class="register-container">
-    <h2>Kayıt Ol</h2>
+    <h2>Register</h2>
     <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <nz-form-item>
-        <nz-form-label [nzSpan]="5">Email</nz-form-label>
+        <nz-form-label [nzSpan]="7">Email</nz-form-label>
         <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
           <input nz-input formControlName="email" placeholder="Email" />
         </nz-form-control>
       </nz-form-item>
     
       <nz-form-item>
-        <nz-form-label [nzSpan]="5">Şifre</nz-form-label>
+        <nz-form-label [nzSpan]="7">Password</nz-form-label>
         <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-          <input nz-input type="password" formControlName="password" placeholder="Şifre" />
+          <input nz-input type="password" formControlName="password" placeholder="Password" />
         </nz-form-control>
       </nz-form-item>
     
       <nz-form-item>
-        <nz-form-label [nzSpan]="5">Şifre Tekrar</nz-form-label>
+        <nz-form-label [nzSpan]="7">Confirm Password</nz-form-label>
         <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-          <input nz-input type="password" formControlName="confirmPassword" placeholder="Şifreyi Tekrarla" />
+          <input nz-input type="password" formControlName="confirmPassword" placeholder="Confirm Password" />
           <div *ngIf="registerForm.get('confirmPassword')?.hasError('mismatch')" class="error-message">
-            Şifreler eşleşmiyor!
+            Passwords do not match!
           </div>
         </nz-form-control>
       </nz-form-item>
     
       <nz-form-item>
         <nz-form-control [nzSpan]="17" [nzOffset]="5">
-          <button nz-button nzType="primary" [disabled]="!registerForm.valid">Kayıt Ol</button>
+          <button nz-button nzType="primary" [disabled]="!registerForm.valid">Register</button>
         </nz-form-control>
       </nz-form-item>
     </form>

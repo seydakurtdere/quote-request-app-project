@@ -8,6 +8,8 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ReactiveFormsModule } from '@angular/forms';  
 import { CommonModule } from '@angular/common';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzModalService } from 'ng-zorro-antd/modal'; 
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 interface Offer {
   mode: string;
@@ -34,14 +36,14 @@ interface Offer {
     NzInputModule,     
     NzButtonModule,   
     ReactiveFormsModule,
-    NzSelectModule
+    NzSelectModule,
+    NzModalModule
   ],
 })
 export class OfferComponent implements OnInit {
   offerForm!: FormGroup;  // FormGroup özelliği
   offerList: Offer[] = []; 
 
-  // Sabit veriler
   modes = ['LCL', 'FCL', 'Air'];
   movementTypes = ['Door to Door', 'Port to Door', 'Door to Port', 'Port to Port'];
   incoterms = ['DDP', 'DAT'];
@@ -50,7 +52,7 @@ export class OfferComponent implements OnInit {
   units = ['CM', 'IN'];
   currencies = ['USD', 'CNY', 'TRY'];
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private modal: NzModalService) {}
 
   ngOnInit(): void {
     // Formu başlatıyoruz
@@ -77,7 +79,7 @@ export class OfferComponent implements OnInit {
       const unit2Value = parseFloat(offerData.unit2);  // unit2'yi sayıya dönüştürüyoruz
 
       if (!isNaN(unit1Value) && !isNaN(unit2Value)) {
-        offerData.amount = unit1Value * unit2Value;  // Çarpma işlemi
+        offerData.amount = unit1Value * unit2Value;
       } else {
         offerData.amount = 0;  // Eğer NaN ise, amount'u 0 olarak ayarlıyoruz
       }
@@ -87,13 +89,20 @@ export class OfferComponent implements OnInit {
 
       this.authService.updateOfferList(offerData);  // Mock veri listesine ekliyoruz
 
-      console.log(this.offerList);  // Konsola yazdırıyoruz
+      this.showSuccessModal();
 
-      // Formu sıfırlıyoruz
       this.offerForm.reset();
 
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  showSuccessModal(): void {
+    this.modal.success({
+      nzTitle: 'Success',
+      nzContent: 'Your offer has been successfully created!',
+      nzOnOk: () => {},
+    });
   }
 }

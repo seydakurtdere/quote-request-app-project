@@ -46,18 +46,17 @@ nz-form-control input:not(:placeholder-shown) ~ .ant-form-item-label {
   color: #40a9ff; 
 }
 
-/* Label ve input arasındaki hizalamayı düzgün yapmak için */
 nz-form-item {
   display: flex;
-  align-items: center; /* Etiketi ve inputu dikeyde ortalar */
+  align-items: center; 
 }
 
 nz-form-label {
-  font-size: 14px; /* Etiket boyutunu küçültüyoruz */
-  font-weight: 500; /* Daha kalın yazı */
-  color: #333; /* Daha koyu renk */
-  margin-bottom: 5px; /* Etiket ile input arasına boşluk ekliyoruz */
-  transition: all 0.3s ease; /* Hover ve focus durumlarında geçiş efekti */
+  font-size: 14px;
+  font-weight: 500; 
+  color: #333; 
+  margin-bottom: 5px; 
+  transition: all 0.3s ease; 
 }
 
 button[nz-button] {
@@ -90,6 +89,6 @@ button[nz-button]:disabled {
 }
 
 .register-link {
-  text-align: center; /* Yazıyı yatayda ortalar */
-  margin-top: 15px; /* Üst boşluk */
+  text-align: center;
+  margin-top: 15px; 
 }
