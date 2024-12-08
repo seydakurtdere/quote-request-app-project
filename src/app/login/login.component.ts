@@ -37,7 +37,12 @@ export class LoginComponent {
       password: ['', [Validators.required, Validators.minLength(6)]] // Şifre zorunlu ve en az 6 karakter olmalı
     });
   }
-
+  ngOnInit(): void {
+    // Eğer kullanıcı zaten giriş yaptıysa login sayfasına gitmesine izin vermeyelim
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/offer']);
+    }
+  }
   // Form submit edildiğinde
   onSubmit(): void {
     if (this.loginForm.valid) {
