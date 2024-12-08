@@ -1,12 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { CommonModule } from '@angular/common';  
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-offer-list',
-  standalone: true,
-  imports: [],
   templateUrl: './offer-list.component.html',
-  styleUrl: './offer-list.component.scss'
+  styleUrls: ['./offer-list.component.scss'],
+  standalone: true,
+  imports: [NzTableModule, CommonModule]
 })
-export class OfferListComponent {
+export class OfferListComponent implements OnInit {
+  offerList: any[] = []; 
 
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    // Servisten veri alıyoruz
+    this.authService.currentOfferList.subscribe(data => {
+      this.offerList = data;  // Veriyi offerList'e atıyoruz
+    });
+  }
 }

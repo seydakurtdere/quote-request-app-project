@@ -37,6 +37,9 @@
             [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'">
           </span>
         </span>
+        <button nz-button nzType="link" (click)="logout()" style="position: absolute; right: 20px; top: 15px; display: flex; align-items: center;">
+          <nz-icon nzType="logout" style="font-size: 16px; color: #1890ff;">Logout</nz-icon> <!-- Logout İkonu -->
+        </button>
       </div>
     </nz-header>
 

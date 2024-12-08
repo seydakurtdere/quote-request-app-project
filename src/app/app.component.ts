@@ -36,5 +36,9 @@ export class AppComponent {
   goToOfferList() {
     this.authService.isLoggedIn() && this.router.navigate(['/offer-list']);
   }
-
+  // Logout fonksiyonunu AuthService içerisindeki logout ile çağırıyoruz
+  logout() {
+    this.authService.logout();  // AuthService'teki logout fonksiyonunu çağırıyoruz
+    this.router.navigate(['/login']); // Kullanıcıyı login sayfasına yönlendiriyoruz
+  }
 }

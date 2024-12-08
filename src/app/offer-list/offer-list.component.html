@@ -1,1 +1,21 @@
-<p>offer-list works!</p>
+<nz-table #basicTable [nzData]="offerList" [nzBordered]="true">
+    <thead>
+      <tr>
+        <th nzWidth="20%">Email</th>
+        <th nzWidth="20%">Mode</th>
+        <th nzWidth="20%">Package Type</th>
+        <th nzWidth="20%">Amount</th>
+        <th nzWidth="20%">Currency</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let offer of offerList">
+        <td>{{ offer.email }}</td>
+        <td>{{ offer.mode }}</td>
+        <td>{{ offer.packageType }}</td>
+        <td>{{ offer.amount }}</td>
+        <td>{{ offer.currency }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  
