@@ -25,6 +25,10 @@ interface Offer {
   email: string; 
 }
 
+interface Cities {
+  [key: string]: string[];
+}
+
 @Component({
   selector: 'app-offer',
   templateUrl: './offer.component.html',
@@ -41,21 +45,27 @@ interface Offer {
   ],
 })
 export class OfferComponent implements OnInit {
-  offerForm!: FormGroup;  // FormGroup özelliği
+  offerForm!: FormGroup; 
   offerList: Offer[] = []; 
 
   modes = ['LCL', 'FCL', 'Air'];
   movementTypes = ['Door to Door', 'Port to Door', 'Door to Port', 'Port to Port'];
   incoterms = ['DDP', 'DAT'];
   countries = ['USA', 'China', 'Turkey'];
+  cities: Cities = {
+    'USA': ['New York', 'Los Angeles', 'Miami', 'Minnesota'],
+    'China': ['Beijing', 'Shanghai'],
+    'Turkey': ['Istanbul', 'Izmir']
+  };
   packageTypes = ['Pallets', 'Boxes', 'Cartons'];
   units = ['CM', 'IN'];
   currencies = ['USD', 'CNY', 'TRY'];
 
+  filteredCities: string[] = [];
+
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private modal: NzModalService) {}
 
   ngOnInit(): void {
-    // Formu başlatıyoruz
     this.offerForm = this.fb.group({
       mode: ['', Validators.required],
       movementType: ['', Validators.required],
@@ -69,30 +79,36 @@ export class OfferComponent implements OnInit {
     });
   }
 
-  // Form submit edildiğinde bu fonksiyon çalışacak
+  onCountryChange(country: string): void {
+    this.filteredCities = this.cities[country] || [];
+  }
+
+  convertInchesToCm(inch: number): number {
+    return inch * 2.54;
+  }
+
+  calculateBoxCount(cartonWidth: number, cartonLength: number, cartonHeight: number, boxWidth: number, boxLength: number, boxHeight: number): number {
+    const boxesInWidth = Math.floor(boxWidth / cartonWidth);
+    const boxesInLength = Math.floor(boxLength / cartonLength);
+    const boxesInHeight = Math.floor(boxHeight / cartonHeight);
+    return boxesInWidth * boxesInLength * boxesInHeight;
+  }
+
   onSubmit() {
     if (this.offerForm.valid) {
       const offerData = this.offerForm.value;
 
-      // Hesaplama işlemi (unit1 ve unit2'nin çarpımı)
-      const unit1Value = parseFloat(offerData.unit1);  // unit1'i sayıya dönüştürüyoruz
-      const unit2Value = parseFloat(offerData.unit2);  // unit2'yi sayıya dönüştürüyoruz
+      const unit1ValueInCm = this.convertInchesToCm(parseFloat(offerData.unit1));
+      const unit2ValueInCm = this.convertInchesToCm(parseFloat(offerData.unit2));
 
-      if (!isNaN(unit1Value) && !isNaN(unit2Value)) {
-        offerData.amount = unit1Value * unit2Value;
-      } else {
-        offerData.amount = 0;  // Eğer NaN ise, amount'u 0 olarak ayarlıyoruz
-      }
+      offerData.amount = unit1ValueInCm * unit2ValueInCm;
 
-      // Kullanıcının email bilgisini ekliyoruz
       offerData.email = this.authService.getUser().email;
 
-      this.authService.updateOfferList(offerData);  // Mock veri listesine ekliyoruz
+      this.authService.updateOfferList(offerData);
 
       this.showSuccessModal();
-
       this.offerForm.reset();
-
     } else {
       console.log('Form is invalid');
     }

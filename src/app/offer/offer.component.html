@@ -1,85 +1,89 @@
 <form nz-form [formGroup]="offerForm" (ngSubmit)="onSubmit()">
-    <nz-form-item>
+  <nz-form-item>
       <nz-form-label [nzSpan]="5">Mode</nz-form-label>
-      <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-        <nz-select formControlName="mode" nzPlaceHolder="Select Mode">
-          <nz-option *ngFor="let mode of modes" [nzValue]="mode" [nzLabel]="mode"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item>
+    <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+      <nz-select formControlName="mode" nzPlaceHolder="Select Mode">
+        <nz-option *ngFor="let mode of modes" [nzValue]="mode" [nzLabel]="mode"></nz-option>
+      </nz-select>
+      <!-- <i nz-icon nzType="info-circle" nzPopoverTitle="Mode" nzPopoverContent="Select the mode of the shipment" style="font-size: 20px; cursor: pointer; margin-left: 10px;"></i> -->
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
       <nz-form-label [nzSpan]="5">Movement Type</nz-form-label>
-      <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-        <nz-select formControlName="movementType" nzPlaceHolder="Select Movement Type">
-          <nz-option *ngFor="let movement of movementTypes" [nzValue]="movement" [nzLabel]="movement"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item>
+    <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+      <nz-select formControlName="movementType" nzPlaceHolder="Select Movement Type">
+        <nz-option *ngFor="let movement of movementTypes" [nzValue]="movement" [nzLabel]="movement"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
       <nz-form-label [nzSpan]="5">Incoterms</nz-form-label>
-      <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-        <nz-select formControlName="incoterms" nzPlaceHolder="Select Incoterms">
-          <nz-option *ngFor="let term of incoterms" [nzValue]="term" [nzLabel]="term"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item>
+    <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+      <nz-select formControlName="incoterms" nzPlaceHolder="Select Incoterms">
+        <nz-option *ngFor="let term of incoterms" [nzValue]="term" [nzLabel]="term"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
       <nz-form-label [nzSpan]="5">Country</nz-form-label>
-      <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-        <nz-select formControlName="country" nzPlaceHolder="Select Country">
-          <nz-option *ngFor="let country of countries" [nzValue]="country" [nzLabel]="country"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item>
+    <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+      <nz-select formControlName="country" nzPlaceHolder="Select Country" (ngModelChange)="onCountryChange($event)">
+        <nz-option *ngFor="let country of countries" [nzValue]="country" [nzLabel]="country"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
       <nz-form-label [nzSpan]="5">City</nz-form-label>
-      <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-        <nz-select formControlName="city" nzPlaceHolder="Select City">
-          <nz-option *ngFor="let city of countries" [nzValue]="city" [nzLabel]="city"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item>
+    <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+      <nz-select formControlName="city" nzPlaceHolder="Select City">
+        <nz-option *ngFor="let city of filteredCities" [nzValue]="city" [nzLabel]="city"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
       <nz-form-label [nzSpan]="5">Package Type</nz-form-label>
-      <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-        <nz-select formControlName="packageType" nzPlaceHolder="Select Package Type">
-          <nz-option *ngFor="let package of packageTypes" [nzValue]="package" [nzLabel]="package"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item>
+    <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+      <nz-select formControlName="packageType" nzPlaceHolder="Select Package Type">
+        <nz-option *ngFor="let package of packageTypes" [nzValue]="package" [nzLabel]="package"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
       <nz-form-label [nzSpan]="5">Unit 1</nz-form-label>
-      <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-        <nz-select formControlName="unit1" nzPlaceHolder="Select Unit 1">
-          <nz-option *ngFor="let unit of units" [nzValue]="unit" [nzLabel]="unit"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item>
+    <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+      <nz-select formControlName="unit1" nzPlaceHolder="Select Unit 1">
+        <nz-option *ngFor="let unit of units" [nzValue]="unit" [nzLabel]="unit"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
       <nz-form-label [nzSpan]="5">Unit 2</nz-form-label>
-      <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-        <nz-select formControlName="unit2" nzPlaceHolder="Select Unit 2">
-          <nz-option *ngFor="let unit of units" [nzValue]="unit" [nzLabel]="unit"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item>
+    <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+      <nz-select formControlName="unit2" nzPlaceHolder="Select Unit 2">
+        <nz-option *ngFor="let unit of units" [nzValue]="unit" [nzLabel]="unit"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
       <nz-form-label [nzSpan]="5">Currency</nz-form-label>
-      <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
-        <nz-select formControlName="currency" nzPlaceHolder="Select Currency">
-          <nz-option *ngFor="let currency of currencies" [nzValue]="currency" [nzLabel]="currency"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <button nz-button nzType="primary" [disabled]="!offerForm.valid">Create Offer</button>
-  </form>
-  
+    <nz-form-control [nzSpan]="17" [nzHasFeedback]="true">
+      <nz-select formControlName="currency" nzPlaceHolder="Select Currency">
+        <nz-option *ngFor="let currency of currencies" [nzValue]="currency" [nzLabel]="currency"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="17" [nzOffset]="5">
+      <button nz-button nzType="primary" [disabled]="!offerForm.valid">Create Offer</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

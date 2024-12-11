@@ -2,18 +2,26 @@
     <thead>
       <tr>
         <th nzWidth="20%">Email</th>
-        <th nzWidth="20%">Mode</th>
-        <th nzWidth="20%">Package Type</th>
-        <th nzWidth="20%">Amount</th>
-        <th nzWidth="20%">Currency</th>
+        <th nzWidth="10%">Mode</th>
+        <th nzWidth="10%">Movement Type</th> 
+        <th nzWidth="10%">Incoterms</th> 
+        <th nzWidth="10%">Country</th> 
+        <th nzWidth="10%">Package Type</th>
+        <th nzWidth="10%">Unit 1</th>
+        <th nzWidth="10%">Unit 2</th>
+        <th nzWidth="10%">Currency</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let offer of offerList">
         <td>{{ offer.email }}</td>
         <td>{{ offer.mode }}</td>
+        <td>{{ offer.movementType }}</td>
+        <td>{{ offer.incoterms }}</td>
+        <td>{{ offer.country }}</td>
         <td>{{ offer.packageType }}</td>
-        <td>{{ offer.amount }}</td>
+        <td>{{ offer.unit1 }}</td>
+        <td>{{ offer.unit2 }}</td>
         <td>{{ offer.currency }}</td>
       </tr>
     </tbody>
